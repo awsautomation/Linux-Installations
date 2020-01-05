@@ -1,0 +1,46 @@
+1. Download Tomcat Archive
+
+ubuntu@ip-172-26-13-53:~$ wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.8/bin/apache-tomcat-9.0.8.tar.gz
+ubuntu@ip-172-26-13-53:~$ tar xzf apache-tomcat-9.0.8.tar.gz
+ubuntu@ip-172-26-13-53:~$ sudo mv apache-tomcat-9.0.8 /usr/local/tomcat9 
+
+2. Set Environment Variables
+
+ubuntu@ip-172-26-13-53:~$ echo "export CATALINA_HOME="/usr/local/tomcat9"" >> ~/.bashrc
+ubuntu@ip-172-26-13-53:~$ source ~/.bashrc
+
+3. Setup User Accounts
+Finally we need to create user accounts to secure and access admin/manager pages. Edit conf/tomcat-users.xml file in your editor and paste inside <tomcat-users> </tomcat-users> tags.
+
+ubuntu@ip-172-26-13-53:~$ vim /usr/local/tomcat9/conf/tomcat-users.xml
+<!-- user manager can access only manager section -->
+<role rolename="manager-gui" />
+<user username="manager" password="_SECRET_PASSWORD_" roles="manager-gui" />
+
+<!-- user admin can access manager and admin section both -->
+<role rolename="admin-gui" />
+<user username="admin" password="_SECRET_PASSWORD_" roles="manager-gui,admin-gui" />
+
+4 – Start Tomcat Service
+Tomcat is very easy to use, There is no need to compile its source. You simply extract the archive and start the tomcat server. Tomcat by default start on port 8080, So make sure no other application using the same port.
+
+ubuntu@ip-172-26-13-53:~$ cd /usr/local/tomcat9
+ubuntu@ip-172-26-13-53:~$ ./bin/startup.sh
+
+[Sample Output]
+
+Using CATALINA_BASE:   /usr/local/tomcat9
+Using CATALINA_HOME:   /usr/local/tomcat9
+Using CATALINA_TMPDIR: /usr/local/tomcat9/temp
+Using CLASSPATH:       /usr/local/tomcat9/bin/bootstrap.jar:/usr/local/tomcat9/bin/tomcat-juli.jar
+Tomcat started.
+
+Access Tomcat in Browser
+Tomcat server default works on port 8080. Access tomcat on a web browser by connecting your server on port 8080.
+Access Tomcat Home:- This is default tomcat home page. There are no authentication required to access this page..
+
+http://localhost:8080 
+
+
+Refrence:
+https://tecadmin.net/install-apache-tomcat-9-on-centos/
